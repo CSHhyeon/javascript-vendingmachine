@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <title>자판기</title>
     <script src="https://cdn.jsdelivr.net/npm/@woowacourse/mission-utils@1.0.1/dist/mission-utils.min.js"></script>
+    <script type="module" src="src/index.js"></script>
+    <link rel="stylesheet" href="./src/index.css">
   </head>
   <body>
     <div id="app">
@@ -18,7 +20,26 @@
         <!-- 상품 관리(추가) 메뉴 -->
         <section id="tab-section-1">
           <h3>상품 추가하기</h3>
+          <form>
+            <input id="product-name-input" type="text"/>
+            <input id="product-price-input" type="number"/>
+            <input id="product-quantity-input" type="number"/>
+            <button id="product-add-button">추가하기</button>
+          </form>
+
           <h3>상품 현황</h3>
+          <table class="product-manage-item">
+            <tr>
+              <th scope="col" class="product-manage-name">상품명</th>
+              <th scope="col" class="product-manage-price">가격</th>
+              <th scope="col" class="product-manage-quantity">수량</th>
+            </tr>
+            <tr>
+              <td>상품명 예시</td>
+              <td>가격 예시</td>
+              <td>수량 예시</td>
+            </tr>
+          </table>
         </section>
         <!-- 잔돈 충전 (자판기 보유 동전) 메뉴 -->
         <section id="tab-section-2" hidden>
@@ -33,6 +54,5 @@
         </section>
       </main>
     </div>
-    <script type="module" src="src/index.js"></script>
   </body>
 </html>
