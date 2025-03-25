@@ -1,9 +1,32 @@
 // 잔돈 모델
 export class Charge {
-  constructor(coin500, coin100, coin50, coin10) {
-    this.coin500 = coin500;
-    this.coin100 = coin100;
-    this.coin50 = coin50;
-    this.coin10 = coin10;
+  constructor() {
+    // 보유 금액
+    this.currentMoney = 0;
+
+    // 동전 보유 현황
+    this.coin500 = 0;
+    this.coin100 = 0;
+    this.coin50 = 0;
+    this.coin10 = 0;
+  }
+
+  getCurrentMoney() {
+    return this.currentMoney;
+  }
+
+  setCurrentMoney(addMoney) {
+    this.currentMoney += addMoney;
+    localStorage.setItem('balance', this.currentMoney);
+  }
+
+  getCurrentCoin() {
+    // TODO
+  }
+
+  setCoin(coinMap) {
+    for (const [coin, element] of coinMap) {
+      this[`coin${coin}`] += element;
+    }
   }
 }

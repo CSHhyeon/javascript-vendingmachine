@@ -8,8 +8,27 @@ export function isValidQuantity(quantity) {
   return (quantity >= 0) && Number.isInteger(quantity);
 }
 
-// 무작위 동전 생성([500, 100, 50, 10] 수량 배열 반환)
-export function randomCoin() {
-  const randomNumber = MissionUtils.Random.pickNumberInList([10, 50, 100, 500]);
-  // TODO
+// pickNumberInList 배열 반환
+function randomList(money) {
+  if (money >= 500) return [500, 100, 50, 10];
+  if (money >= 100) return [100, 50, 10];
+  if (money >= 50) return [50, 10];
+  if (money >= 10) return [10];
+  return [];
+}
+
+// 무작위 동전 생성([500, 100, 50, 10] 수량 맵 반환)
+export function randomCoin(money) {
+  const coinMap = new Map([
+    [500, 0], [100, 0], [50, 0], [10, 0],
+  ]);
+
+  while(money >= 10) {
+    const randomNumber = MissionUtils.Random.pickNumberInList(randomList(money));
+    money -= randomNumber;
+
+    coinMap.set(randomNumber, coinMap.get(randomNumber) + 1);
+  }
+
+  return coinMap;
 }
