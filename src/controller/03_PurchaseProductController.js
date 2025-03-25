@@ -28,7 +28,7 @@ export class PurchaseProductController {
     }
 
     // html 적용
-    this.purchaseProductView.updateAmount(this.chargeModel.addMachineMoney(chargeMoney));
+    this.purchaseProductView.updateAmount(this.chargeModel.addUserMoney(chargeMoney));
   }
 
   // 상품 구매하기 버튼 클릭 핸들러

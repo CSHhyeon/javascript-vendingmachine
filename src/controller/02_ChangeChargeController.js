@@ -22,7 +22,7 @@ export class ChangeChargeController {
     }
 
     // 보유 금액 적용
-    const machineMoney = this.model.addMachineMoney(machineMoney);
+    const machineMoney = this.model.addMachineMoney(chargeMoney);
     this.view.updateAmount(machineMoney);
 
     // 무작위 동전 생성

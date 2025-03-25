@@ -101,11 +101,6 @@ export class Charge {
     return coinMap;
   }
 
-  // 동전 반환
-  returnCharge() {
-
-  }
-
   // 모두 0으로 초기화
   setChargesZero() {
     this.machineMoney = 0;

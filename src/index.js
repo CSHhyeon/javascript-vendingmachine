@@ -31,3 +31,4 @@ new ManageProductController(product, manageProductView, purchaseProductView);
 new ChangeChargeController(charge, changeChargeView);
 
 // 상품 구매
+new PurchaseProductController(charge, product, manageProductView, changeChargeView, purchaseProductView);
