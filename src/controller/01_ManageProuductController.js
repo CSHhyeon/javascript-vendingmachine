@@ -1,19 +1,20 @@
 import { isValidPrice, isValidQuantity } from '../Utils.js';
 
 export class ManageProductController {
-  constructor(model, view) {
+  constructor(model, manageProductView, purchaseProductView) {
     this.model = model;
-    this.view = view;
+    this.manageProductView = manageProductView;
+    this.purchaseProductView = purchaseProductView;
     this.init();
   }
   
   init() {
-    this.view.bindProductAddButton(this.handleProductAddButton.bind(this));
+    this.manageProductView.bindProductAddButton(this.handleProductAddButton.bind(this));
   }
 
   handleProductAddButton(event) {
     event.preventDefault();
-    const { name, price, quantity } = this.view.getProductData();
+    const { name, price, quantity } = this.manageProductView.getProductData();
 
     // 이름 중복 확인
     if (this.model.isDuplicated(name)) {
@@ -34,6 +35,7 @@ export class ManageProductController {
     }
 
     const product = this.model.addProduct(name, price, quantity);
-    this.view.addNewProduct(product);
+    this.manageProductView.addNewProduct(product);
+    this.purchaseProductView.addProduct(product);
   }
 }

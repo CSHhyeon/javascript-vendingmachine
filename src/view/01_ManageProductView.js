@@ -1,4 +1,4 @@
-// View: 사용자 인터페이스 및 DOM 조작
+// 상품 관리 View
 export class ManageProductView {
   constructor() {
     // 상품 추가하기
@@ -39,7 +39,6 @@ export class ManageProductView {
 
     const textNode = document.createTextNode(data);
     newTd.appendChild(textNode);
-    console.log(newTd)
     return newTd;
   }
 
