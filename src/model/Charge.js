@@ -18,15 +18,21 @@ export class Charge {
   setCurrentMoney(addMoney) {
     this.currentMoney += addMoney;
     localStorage.setItem('balance', this.currentMoney);
+
+    return this.getCurrentMoney();
   }
 
   getCurrentCoin() {
-    // TODO
+    return new Map([
+      [500, this.coin500], [100, this.coin100], [50, this.coin50], [10, this.coin10]
+    ]);
   }
 
   setCoin(coinMap) {
     for (const [coin, element] of coinMap) {
       this[`coin${coin}`] += element;
     }
+
+    return this.getCurrentCoin();
   }
 }
