@@ -6,15 +6,17 @@ export class PurchaseProductView {
     this.chargeButton = document.querySelector("#charge-button");
     this.chargeAmount = document.querySelector("#charge-amount");
 
-    // TODO) 구매하기 버튼
+    // 상품 테이블
     this.productTable = document.querySelector("#product-table2");
 
     // 잔돈 반환
     this.coinReturnButton = document.querySelector("#coin-return-button");
-    this.coin500Quantity = document.querySelector("#coin-500-quantity");
-    this.coin100Quantity = document.querySelector("#coin-100-quantity");
-    this.coin50Quantity = document.querySelector("#coin-50-quantity");
-    this.coin10Quantity = document.querySelector("#coin-10-quantity");
+    this.coinQuantities = new Map([
+      [500, document.querySelector("#coin-500-quantity")],
+      [100, document.querySelector("#coin-100-quantity")],
+      [50, document.querySelector("#coin-50-quantity")],
+      [10, document.querySelector("#coin-10-quantity")],
+    ]);
   }
 
   /* 입력값 반환 */
@@ -23,7 +25,22 @@ export class PurchaseProductView {
   }
   
   /* 이벤트 핸들러 바인딩 */
-  // TODO
+  bindChargeButton(handler) {
+    this.chargeButton.addEventListener("click", handler);
+  }
+
+  bindCoinReturnButton(handler) {
+    this.coinReturnButton.addEventListener("click", handler);
+  }
+
+  bindProductTable(handler) {
+    this.productTable.addEventListener("click", handler);
+  }
+
+  // 보유 금액 update
+  updateAmount(amount) {
+    this.chargeAmount.replaceChildren(document.createTextNode(amount + "원"));
+  }
 
   /* 상품 추가 */
   createTableRow() {
@@ -70,4 +87,12 @@ export class PurchaseProductView {
     this.productTable.appendChild(newTr);
   }
 
+  /* 구매하기 버튼 클릭 */
+
+  /* 잔돈 반환 출력 */
+  updateCoinQuantity(coinMap) {
+    for (const [coin, element] of this.coinQuantities) {
+      element.replaceChildren(document.createTextNode(`${coinMap.get(coin)}개`));
+    }
+  }
 }

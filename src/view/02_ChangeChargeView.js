@@ -13,7 +13,6 @@ export class ChangeChargeView {
       [50, document.querySelector("#vending-machine-coin-50-quantity")],
       [10, document.querySelector("#vending-machine-coin-10-quantity")],
     ]);
-    
   }
 
   /* 입력값 반환 */
