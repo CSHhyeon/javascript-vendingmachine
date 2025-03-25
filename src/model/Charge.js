@@ -1,3 +1,4 @@
+// 잔돈 모델
 export class Charge {
   constructor(coin500, coin100, coin50, coin10) {
     this.coin500 = coin500;
