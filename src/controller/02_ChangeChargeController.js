@@ -22,12 +22,12 @@ export class ChangeChargeController {
     }
 
     // 보유 금액 적용
-    const currentMoney = this.model.setCurrentMoney(chargeMoney);
-    this.view.updateAmount(currentMoney);
+    const machineMoney = this.model.addMachineMoney(machineMoney);
+    this.view.updateAmount(machineMoney);
 
     // 무작위 동전 생성
     const heldMoney = randomCoin(chargeMoney);
-    const coinMap = this.model.setCoin(heldMoney);
+    const coinMap = this.model.addCoin(heldMoney);
     this.view.updateCoinQuantity(coinMap);
   }
 }

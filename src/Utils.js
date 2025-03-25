@@ -20,7 +20,7 @@ function randomList(money) {
 // 무작위 동전 생성([500, 100, 50, 10] 수량 맵 반환)
 export function randomCoin(money) {
   const coinMap = new Map([
-    [500, 0], [100, 0], [50, 0], [10, 0],
+    [500, 0], [100, 0], [50, 0], [10, 0]
   ]);
 
   while(money >= 10) {
