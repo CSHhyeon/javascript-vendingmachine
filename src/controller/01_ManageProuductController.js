@@ -27,12 +27,6 @@ export class ManageProductController {
     event.preventDefault();
     const { name, price, quantity } = this.manageProductView.getProductData();
 
-    // 이름 중복 확인
-    if (this.productModel.isDuplicated(name)) {
-      alert("이미 존재하는 제품입니다. 다른 이름으로 입력하세요.");
-      return;
-    }
-
     // 가격 확인
     if (!isValidPrice(price)) {
       alert("100원 이상의 10으로 떨어지는 정수를 입력하세요.");
@@ -45,8 +39,38 @@ export class ManageProductController {
       return;
     }
 
-    this.manageProductView.clearInput();
+    // 이름 & 가격 중복 확인
+    if (this.productModel.isDuplicatedProduct(name, price)) {
+      if (confirm("이미 존재하는 제품입니다. 수량을 늘리시겠습니까?")) {
+        this.addQuantity(name, quantity);
+      }
+    } else if (this.productModel.isDuplicatedName(name)) {
+      if (confirm("이미 존재하는 제품입니다. 가격을 변경하고, 수량을 늘리시겠습니까?")) {
+        this.changePrice(name, price, quantity);
+      }
+    } else {
+      this.addNewProduct(name, price, quantity);
+    }
 
+    this.manageProductView.clearInput();
+  }
+
+  // 수량 증가
+  addQuantity(name, quantity) {
+    const changedQuantity = this.productModel.addQuantity(name, quantity);
+    this.manageProductView.changeProductQuantity(name, changedQuantity);
+    this.purchaseProductView.changeProductQuantity(name, changedQuantity);
+  }
+
+  // 기존 제품 정보 수정
+  changePrice(name, price, quantity) {
+    const changedQuantity = this.productModel.changeInfo(name, price, quantity);
+    this.manageProductView.changeProductInfo(name, price, changedQuantity);
+    this.purchaseProductView.changeProductInfo(name, price, changedQuantity);
+  }
+
+  // 새로운 제품 추가
+  addNewProduct(name, price, quantity) {
     const product = this.productModel.addProduct(name, price, quantity);
     this.manageProductView.addNewProduct(product);
     this.purchaseProductView.addProduct(product);

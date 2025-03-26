@@ -36,9 +36,7 @@ export class ManageProductView {
   createTableData(data, className) {
     const newTd = document.createElement("td");
     newTd.className = className;
-
-    const textNode = document.createTextNode(data);
-    newTd.appendChild(textNode);
+    newTd.textContent = data;
     return newTd;
   }
 
@@ -64,6 +62,22 @@ export class ManageProductView {
       if (productName.textContent.trim() === name) {
         const productQuantity = row.querySelector('.product-manage-quantity');
         productQuantity.replaceChildren(document.createTextNode(quantity));
+      }
+    });
+  }
+
+  /* 상품 가격, 수량 변경 */
+  changeProductInfo(name, price, quantity) {
+    const products = document.querySelectorAll('.product-manage-item');
+
+    products.forEach(row => {
+      const productName = row.querySelector('.product-manage-name');
+      if (productName.textContent.trim() === name) {
+        const productQuantity = row.querySelector('.product-manage-quantity');
+        productQuantity.replaceChildren(document.createTextNode(quantity));
+
+        const productPrice = row.querySelector('.product-manage-price');
+        productPrice.replaceChildren(document.createTextNode(price));
       }
     });
   }

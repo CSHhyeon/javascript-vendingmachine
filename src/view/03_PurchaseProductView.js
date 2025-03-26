@@ -57,10 +57,8 @@ export class PurchaseProductView {
   createTableData(data, className, dataSetName) {
     const newTd = document.createElement("td");
     newTd.className = className;
+    newTd.textContent = data;
     newTd.setAttribute(dataSetName, data);
-
-    const textNode = document.createTextNode(data);
-    newTd.appendChild(textNode);
     return newTd;
   }
 
@@ -116,6 +114,19 @@ export class PurchaseProductView {
         purchaseButton.disabled = true;
       }
     });
+  }
+
+  /* 상품 수량 변경 */
+  changeProductQuantity(name, quantity) {
+    const row = this.productTable.querySelector(`td[data-product-name="${name}"]`).closest('tr');
+    row.querySelector('.product-purchase-quantity').textContent = quantity;
+  }
+
+  /* 상품 가격, 수량 변경 */
+  changeProductInfo(name, price, quantity) {
+    const row = this.productTable.querySelector(`td[data-product-name="${name}"]`).closest('tr');;
+    row.querySelector('.product-purchase-price').textContent = price;
+    row.querySelector('.product-purchase-quantity').textContent = quantity;
   }
 
   /* 잔돈 반환 출력 */
