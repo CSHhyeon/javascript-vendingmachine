@@ -87,7 +87,29 @@ export class PurchaseProductView {
     this.productTable.appendChild(newTr);
   }
 
-  /* 구매하기 버튼 클릭 */
+  /* 구매하기 버튼 클릭 (최대한 dataset 활용) */
+  getPrice(parent) {
+    return parseInt(parent.querySelector('.product-purchase-price').dataset.productPrice);
+  }
+
+  sellProduct(parent) {
+    const quantityTd = parent.querySelector('.product-purchase-quantity');
+    const sellOne = parseInt(quantityTd.dataset.productQuantity) - 1;
+
+    quantityTd.replaceChildren(document.createTextNode(sellOne));
+    quantityTd.dataset.productQuantity = sellOne;
+    return sellOne;
+  }
+
+  // 구매하기 버튼 disable
+  disablePrduct(parent) {
+    parent.querySelector('purchase-button').disabled = true;
+  }
+
+  // 구매하기 버튼 enable
+  enablePrduct(parent) {
+    parent.querySelector('purchase-button').disabled = false;
+  }
 
   /* 잔돈 반환 출력 */
   updateCoinQuantity(coinMap) {

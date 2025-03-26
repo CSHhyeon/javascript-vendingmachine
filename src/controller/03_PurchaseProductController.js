@@ -34,6 +34,25 @@ export class PurchaseProductController {
   // 상품 구매하기 버튼 클릭 핸들러
   handleProductTable(event) {
     event.preventDefault();
+
+    // 구매하기 버튼 눌렀을 때만 동작해야 함
+    if (!event.target.classList.contains('purchase-button')) return;
+
+    // target: 이벤트가 발생한 객체, closest(): 현재 element에서 가장 가까운 조상 반환
+    const currentRow = event.target.closest('tr');
+    const productPrice  = this.purchaseProductView.getPrice(currentRow);
+    if ( productPrice > this.chargeModel.getUserMoney()) {
+      alert("금액이 모자랍니다.");
+      return;
+    }
+
+    // 수량 수정
+    const productQuantity = this.purchaseProductView.sellProduct(currentRow);
+    if (productQuantity === 0) event.target.disabled = true;
+
+    // 투입한 금액 수정
+    const userMoney = this.chargeModel.useUserMoney(productPrice);
+    this.purchaseProductView.updateAmount(userMoney);
   }
 
   // 반환하기 버튼 클릭 핸들러

@@ -48,6 +48,13 @@ export class Charge {
     return this.getUserMoney();
   }
 
+  useUserMoney(price) {
+    this.userMoney -= price;
+    localStorage.setItem('userMoney', this.userMoney);
+
+    return this.getUserMoney();
+  }
+
   // 동전 보유 현황
   getCurrentCoin() {
     return new Map([
