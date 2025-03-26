@@ -1,14 +1,25 @@
 import { isValidPrice, isValidQuantity } from '../Utils.js';
 
 export class ManageProductController {
-  constructor(model, manageProductView, purchaseProductView) {
-    this.model = model;
+  constructor(productModel, manageProductView, purchaseProductView) {
+    this.productModel = productModel;
     this.manageProductView = manageProductView;
     this.purchaseProductView = purchaseProductView;
     this.init();
+    this.bindEvents();
+  }
+
+  init() {
+    this.productModel.loadFromLocalStorage();
+    const productMap = this.productModel.getProducts();
+
+    for (const product of productMap.values()) {
+      this.manageProductView.addNewProduct(product);
+      this.purchaseProductView.addProduct(product);
+    }
   }
   
-  init() {
+  bindEvents() {
     this.manageProductView.bindProductAddButton(this.handleProductAddButton.bind(this));
   }
 
@@ -17,7 +28,7 @@ export class ManageProductController {
     const { name, price, quantity } = this.manageProductView.getProductData();
 
     // 이름 중복 확인
-    if (this.model.isDuplicated(name)) {
+    if (this.productModel.isDuplicated(name)) {
       alert("이미 존재하는 제품입니다. 다른 이름으로 입력하세요.");
       return;
     }
@@ -36,7 +47,7 @@ export class ManageProductController {
 
     this.manageProductView.clearInput();
 
-    const product = this.model.addProduct(name, price, quantity);
+    const product = this.productModel.addProduct(name, price, quantity);
     this.manageProductView.addNewProduct(product);
     this.purchaseProductView.addProduct(product);
   }

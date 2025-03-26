@@ -19,11 +19,37 @@ export class ProductModel {
     this.productMap = new Map();
   }
 
+  saveToLocalStorage() {
+    const productArray = [...this.productMap.entries()];
+    localStorage.setItem("products", JSON.stringify(productArray));
+  }
+
+  loadFromLocalStorage() {
+    const getLocal = localStorage.getItem("products");
+    if (!getLocal) return;
+
+    const productArray = JSON.parse(getLocal);
+    for (const [name, product] of productArray) {
+      const productObj = new Product(product.name, product.price, product.quantity);
+      this.productMap.set(name, productObj);
+    }
+  }
+
+  // product Map 반환
+  getProducts() {
+    return this.productMap;
+  }
+
+  // 가격 반환
+  getPrice(name) {
+    return this.productMap.get(name).price;
+  }
+
   // 상품 Map에 추가
   addProduct(name, price, quantity) {
     const newProduct = new Product(name, price, quantity);
     this.productMap.set(name, newProduct); // model map에 저장
-    localStorage.setItem('products', JSON.stringify(this.productMap)); // localStorage에 저장
+    this.saveToLocalStorage(); // localStorage에 저장
     
     return newProduct;
   }
@@ -34,11 +60,6 @@ export class ProductModel {
     product.sellOne();
 
     return product.quantity;
-  }
-
-  // 가격 반환
-  getPrice(name) {
-    return this.productMap.get(name).price;
   }
 
   // 이름 중복 확인 (중복이면 true 반환, 아니면 false 반환)

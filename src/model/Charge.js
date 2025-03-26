@@ -14,6 +14,45 @@ export class Charge {
     this.coin10 = 0;
   }
 
+  // localStorage
+  saveMachineMoneyToLS() {
+    localStorage.setItem('machineMoney', this.machineMoney);
+  }
+
+  loadMachineMoneyFromLS() {
+    const money = localStorage.getItem('machineMoney');
+    if (!money) return;
+
+    this.machineMoney = money;
+  }
+
+  saveUserMoneyToLS() {
+    localStorage.setItem('userMoney', this.userMoney);
+  }
+
+  loadUserMoneyFromLS() {
+    const money = localStorage.getItem('userMoney');
+    if (!money) return;
+
+    this.userMoney = money;
+  }
+
+  saveCoinToLS() {
+    const coinArray = [this.coin500, this.coin100, this.coin50, this.coin10];
+    localStorage.setItem('machineCoin', JSON.stringify(coinArray));
+  }
+
+  loadCoinFromLS() {
+    const coin = localStorage.getItem('machineCoin');
+    if (!coin) return;
+
+    const [coin500, coin100, coin50, coin10] = JSON.parse(coin);
+    this.coin500 = coin500;
+    this.coin100 = coin100;
+    this.coin50 = coin50;
+    this.coin10 = coin10;
+  }
+
   // 보유 금액
   getMachineMoney() {
     return this.machineMoney;
@@ -21,12 +60,12 @@ export class Charge {
 
   setMachineMoney(money) {
     this.machineMoney = money;
-    localStorage.setItem('balance', this.machineMoney);
+    this.saveMachineMoneyToLS();
   }
 
   addMachineMoney(addMoney) {
     this.machineMoney += addMoney;
-    localStorage.setItem('balance', this.machineMoney);
+    this.saveMachineMoneyToLS();
 
     return this.getMachineMoney();
   }
@@ -38,19 +77,19 @@ export class Charge {
 
   setUserMoney(inputMoney) {
     this.userMoney = inputMoney;
-    localStorage.setItem('userMoney', this.userMoney);
+    this.saveUserMoneyToLS();
   }
 
   addUserMoney(inputMoney) {
     this.userMoney += inputMoney;
-    localStorage.setItem('userMoney', this.userMoney);
+    this.saveUserMoneyToLS();
 
     return this.getUserMoney();
   }
 
   useUserMoney(price) {
     this.userMoney -= price;
-    localStorage.setItem('userMoney', this.userMoney);
+    this.saveUserMoneyToLS();
 
     return this.getUserMoney();
   }
@@ -67,12 +106,15 @@ export class Charge {
     this.coin100 = coin100;
     this.coin50 = coin50;
     this.coin10 = coin10;
+
+    this.saveCoinToLS();
   }
 
   addCoin(coinMap) {
     for (const [coin, element] of coinMap) {
       this[`coin${coin}`] += element;
     }
+    this.saveCoinToLS();
 
     return this.getCurrentCoin();
   }
@@ -85,6 +127,7 @@ export class Charge {
   // 사용자 금액에서 상품 구매함
   buyProduct(price) {
     this.userMoney -= price;
+    this.saveUserMoneyToLS();
   }
 
   // 최소한의 동전 수량 맵 반환
@@ -105,20 +148,7 @@ export class Charge {
       coinMap.set(coin, coinMap.get(coin) + 1);
     }
   
+    this.saveCoinToLS();
     return coinMap;
-  }
-
-  // 모두 0으로 초기화
-  setChargesZero() {
-    this.machineMoney = 0;
-    this.userMoney = 0;
-
-    this.coin500 = 0;
-    this.coin100 = 0;
-    this.coin50 = 0;
-    this.coin10 = 0;
-
-    localStorage.setItem('balance', 0);
-    localStorage.setItem('userMoney', 0);
   }
 }

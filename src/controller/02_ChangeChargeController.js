@@ -1,19 +1,28 @@
 import { isValidPrice, randomCoin } from '../Utils.js';
 
 export class ChangeChargeController {
-  constructor(model, view) {
-    this.model = model;
-    this.view = view;
+  constructor(chargeModel, changeChargeView) {
+    this.chargeModel = chargeModel;
+    this.changeChargeView = changeChargeView;
     this.init();
+    this.bindEvents();
   }
 
   init() {
-    this.view.bindChargeButton(this.handleChargeButton.bind(this));
+    this.chargeModel.loadMachineMoneyFromLS();
+    this.chargeModel.loadCoinFromLS();
+
+    this.changeChargeView.updateAmount(this.chargeModel.getMachineMoney());
+    this.changeChargeView.updateCoinQuantity(this.chargeModel.getCurrentCoin());
+  }
+
+  bindEvents() {
+    this.changeChargeView.bindChargeButton(this.handleChargeButton.bind(this));
   }
 
   handleChargeButton(event) {
     event.preventDefault();
-    const chargeMoney = Number(this.view.getChargeInput());
+    const chargeMoney = Number(this.changeChargeView.getChargeInput());
 
     // 금액 검토
     if (!isValidPrice(chargeMoney)) {
@@ -21,15 +30,15 @@ export class ChangeChargeController {
       return;
     }
 
-    this.model.clearInput();
+    this.chargeModel.clearInput();
 
     // 보유 금액 적용
-    const machineMoney = this.model.addMachineMoney(chargeMoney);
-    this.view.updateAmount(machineMoney);
+    const machineMoney = this.chargeModel.addMachineMoney(chargeMoney);
+    this.changeChargeView.updateAmount(machineMoney);
 
     // 무작위 동전 생성
     const heldMoney = randomCoin(chargeMoney);
-    const coinMap = this.model.addCoin(heldMoney);
-    this.view.updateCoinQuantity(coinMap);
+    const coinMap = this.chargeModel.addCoin(heldMoney);
+    this.changeChargeView.updateCoinQuantity(coinMap);
   }
 }

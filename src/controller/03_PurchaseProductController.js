@@ -1,4 +1,4 @@
-import { isValidPrice, randomCoin } from '../Utils.js';
+import { isValidPrice } from '../Utils.js';
 
 export class PurchaseProductController {
   constructor(chargeModel, productModel, manageProductView, changeChargeView, purchaseProductView) {
@@ -8,9 +8,15 @@ export class PurchaseProductController {
     this.changeChargeView = changeChargeView;
     this.purchaseProductView = purchaseProductView;
     this.init();
+    this.bindEvents();
   }
 
   init() {
+    this.chargeModel.loadUserMoneyFromLS();
+    this.purchaseProductView.updateAmount(this.chargeModel.getUserMoney());
+  }
+
+  bindEvents() {
     this.purchaseProductView.bindChargeButton(this.handleChargeButton.bind(this));
     this.purchaseProductView.bindCoinReturnButton(this.handleCoinReturnButton.bind(this));
     this.purchaseProductView.bindProductTable(this.handleProductTable.bind(this));
@@ -62,17 +68,16 @@ export class PurchaseProductController {
     event.preventDefault();
     const userMoney = this.chargeModel.getUserMoney();
     const machineMoney = this.chargeModel.getMachineMoney();
-
     let calcMoney = 0;
+    
     if (machineMoney < userMoney) {
       calcMoney = machineMoney;
       this.chargeModel.setMachineMoney(0);
-      this.chargeModel.setUserMoney(0);
     } else {
       calcMoney = userMoney;
       this.chargeModel.setMachineMoney(machineMoney - userMoney);
-      this.chargeModel.setUserMoney(0);
     }
+    this.chargeModel.setUserMoney(0);
 
     // 상품 구매 페이지
     const returnCoinMap = this.chargeModel.minimumCoin(calcMoney);
