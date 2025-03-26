@@ -23,7 +23,7 @@ export class Charge {
     const money = localStorage.getItem('machineMoney');
     if (!money) return;
 
-    this.machineMoney = money;
+    this.machineMoney = parseInt(money);
   }
 
   saveUserMoneyToLS() {
@@ -34,7 +34,7 @@ export class Charge {
     const money = localStorage.getItem('userMoney');
     if (!money) return;
 
-    this.userMoney = money;
+    this.userMoney = parseInt(money);
   }
 
   saveCoinToLS() {
@@ -47,10 +47,10 @@ export class Charge {
     if (!coin) return;
 
     const [coin500, coin100, coin50, coin10] = JSON.parse(coin);
-    this.coin500 = coin500;
-    this.coin100 = coin100;
-    this.coin50 = coin50;
-    this.coin10 = coin10;
+    this.coin500 = parseInt(coin500);
+    this.coin100 = parseInt(coin100);
+    this.coin50 = parseInt(coin50);
+    this.coin10 = parseInt(coin10);
   }
 
   // 보유 금액

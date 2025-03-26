@@ -48,15 +48,20 @@ export class PurchaseProductController {
 
     // target: 이벤트가 발생한 객체, closest(): 현재 element에서 가장 가까운 조상 반환
     const currentRow = event.target.closest('tr');
-    const productPrice  = this.purchaseProductView.getPrice(currentRow);
+    const productPrice  = this.purchaseProductView.getProductPrice(currentRow);
     if ( productPrice > this.chargeModel.getUserMoney()) {
       alert("금액이 모자랍니다.");
       return;
     }
 
+    const productName = this.purchaseProductView.getProductName(currentRow);
+
     // 수량 수정
-    const productQuantity = this.purchaseProductView.sellProduct(currentRow);
+    const productQuantity = this.productModel.sellProduct(productName);
     if (productQuantity === 0) event.target.disabled = true;
+
+    this.purchaseProductView.changeProductQuantity(currentRow, productQuantity);
+    this.manageProductView.changeProductQuantity(productName, productQuantity);
 
     // 투입한 금액 수정
     const userMoney = this.chargeModel.useUserMoney(productPrice);

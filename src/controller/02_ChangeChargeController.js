@@ -30,7 +30,7 @@ export class ChangeChargeController {
       return;
     }
 
-    this.chargeModel.clearInput();
+    this.changeChargeView.clearInput();
 
     // 보유 금액 적용
     const machineMoney = this.chargeModel.addMachineMoney(chargeMoney);

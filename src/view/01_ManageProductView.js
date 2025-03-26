@@ -55,6 +55,20 @@ export class ManageProductView {
     this.productTable.appendChild(newTr);
   }
 
+  /* 상품 수량 변경 */
+  changeProductQuantity(name, quantity) {
+    const products = document.querySelectorAll('.product-manage-item');
+
+    products.forEach(row => {
+      const productName = row.querySelector('.product-manage-name');
+      if (productName.textContent.trim() === name) {
+        const productQuantity = row.querySelector('.product-manage-quantity');
+        productQuantity.replaceChildren(document.createTextNode(quantity));
+      }
+});
+
+  }
+
   clearInput() {
     this.productNameInput.value = "";
     this.productPriceInput.value = "";

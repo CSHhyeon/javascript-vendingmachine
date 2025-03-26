@@ -58,6 +58,7 @@ export class ProductModel {
   sellProduct(name) {
     const product = this.productMap.get(name);
     product.sellOne();
+    this.saveToLocalStorage();
 
     return product.quantity;
   }
