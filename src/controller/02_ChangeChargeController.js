@@ -21,6 +21,8 @@ export class ChangeChargeController {
       return;
     }
 
+    this.model.clearInput();
+
     // 보유 금액 적용
     const machineMoney = this.model.addMachineMoney(chargeMoney);
     this.view.updateAmount(machineMoney);

@@ -36,4 +36,8 @@ export class ChangeChargeView {
       element.replaceChildren(document.createTextNode(`${coinMap.get(coin)}개`));
     }
   }
+
+  clearInput() {
+    this.chargeInput.value = "";
+  }
 }

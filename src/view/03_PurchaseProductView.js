@@ -23,6 +23,10 @@ export class PurchaseProductView {
   getChargeInput() {
     return this.chargeInput.value;
   }
+
+  clearInput() {
+    this.chargeInput.value = "";
+  }
   
   /* 이벤트 핸들러 바인딩 */
   bindChargeButton(handler) {

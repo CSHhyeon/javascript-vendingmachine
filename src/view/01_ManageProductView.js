@@ -54,4 +54,10 @@ export class ManageProductView {
 
     this.productTable.appendChild(newTr);
   }
+
+  clearInput() {
+    this.productNameInput.value = "";
+    this.productPriceInput.value = "";
+    this.productQuantityInput.value = "";
+  }
 }

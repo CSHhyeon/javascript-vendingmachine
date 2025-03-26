@@ -27,6 +27,8 @@ export class PurchaseProductController {
       return;
     }
 
+    this.purchaseProductView.clearInput();
+
     // html 적용
     this.purchaseProductView.updateAmount(this.chargeModel.addUserMoney(chargeMoney));
   }

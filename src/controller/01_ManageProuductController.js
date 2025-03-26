@@ -34,6 +34,8 @@ export class ManageProductController {
       return;
     }
 
+    this.manageProductView.clearInput();
+
     const product = this.model.addProduct(name, price, quantity);
     this.manageProductView.addNewProduct(product);
     this.purchaseProductView.addProduct(product);
