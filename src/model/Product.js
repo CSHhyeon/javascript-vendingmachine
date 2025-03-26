@@ -53,11 +53,6 @@ export class ProductModel {
     return this.productMap;
   }
 
-  // 가격 반환
-  getPrice(name) {
-    return this.productMap.get(name).price;
-  }
-
   // 가격 & 수량 변경
   changeInfo(name, price, quantity) {
     const product = this.productMap.get(name);

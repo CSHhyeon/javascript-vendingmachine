@@ -27,13 +27,13 @@ export class ChangeChargeView {
 
   // 보유 금액 update
   updateAmount(amount) {
-    this.chargeAmount.replaceChildren(document.createTextNode(amount + "원"));
+    this.chargeAmount.textContent = amount + "원";
   }
 
   // 동전 개수 update
   updateCoinQuantity(coinMap) {
     for (const [coin, element] of this.coinQuantities) {
-      element.replaceChildren(document.createTextNode(`${coinMap.get(coin)}개`));
+      element.textContent = `${coinMap.get(coin)}개`;      
     }
   }
 

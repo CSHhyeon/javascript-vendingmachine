@@ -43,14 +43,13 @@ export class PurchaseProductView {
 
   // 보유 금액 update
   updateAmount(amount) {
-    this.chargeAmount.replaceChildren(document.createTextNode(amount + "원"));
+    this.chargeAmount.textContent = amount + "원";
   }
 
   /* 상품 추가 */
   createTableRow() {
     const newTr = document.createElement("tr");
     newTr.className = "product-purchase-item";
-
     return newTr;
   }
 
@@ -100,7 +99,7 @@ export class PurchaseProductView {
 
   changeProductQuantity(parent, quantity) {
     const quantityTd = parent.querySelector('.product-purchase-quantity');
-    quantityTd.replaceChildren(document.createTextNode(quantity));
+    quantityTd.textContent = quantity;
     quantityTd.dataset.productQuantity = quantity;
   }
 
@@ -132,7 +131,7 @@ export class PurchaseProductView {
   /* 잔돈 반환 출력 */
   updateCoinQuantity(coinMap) {
     for (const [coin, element] of this.coinQuantities) {
-      element.replaceChildren(document.createTextNode(`${coinMap.get(coin)}개`));
+      element.textContent = `${coinMap.get(coin)}개`;
     }
   }
 }

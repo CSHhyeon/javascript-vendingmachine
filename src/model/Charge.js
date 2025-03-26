@@ -124,12 +124,6 @@ export class Charge {
     return this.userMoney >= price;
   }
 
-  // 사용자 금액에서 상품 구매함
-  buyProduct(price) {
-    this.userMoney -= price;
-    this.saveUserMoneyToLS();
-  }
-
   // 최소한의 동전 수량 맵 반환
   minimumCoin(money) {
     const coinMap = new Map([
