@@ -61,7 +61,7 @@ export class PurchaseProductController {
     const productQuantity = this.productModel.sellProduct(productName);
     if (productQuantity === 0) event.target.disabled = true;
 
-    this.purchaseProductView.changeProductQuantity(currentRow, productQuantity);
+    this.purchaseProductView.changeProductQuantityByParent(currentRow, productQuantity);
     this.manageProductView.changeProductQuantity(productName, productQuantity);
 
     // 투입한 금액 수정

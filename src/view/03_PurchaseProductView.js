@@ -61,13 +61,15 @@ export class PurchaseProductView {
     return newTd;
   }
 
-  createButton() {
+  createButton(quantity) {
     const newTd = document.createElement("td");
     const button = document.createElement("button");
     const textNode = document.createTextNode("구매하기");
 
     button.className = "purchase-button";
     button.appendChild(textNode);
+
+    if(quantity === 0) button.disabled = true;
 
     newTd.appendChild(button);
     return newTd;
@@ -78,7 +80,7 @@ export class PurchaseProductView {
     const name = this.createTableData(product.name, "product-purchase-name", "data-product-name");
     const price = this.createTableData(product.price, "product-purchase-price", "data-product-price");
     const quantity = this.createTableData(product.quantity, "product-purchase-quantity", "data-product-quantity");
-    const button = this.createButton();
+    const button = this.createButton(product.quantity);
   
     newTr.appendChild(name);
     newTr.appendChild(price);
@@ -97,7 +99,7 @@ export class PurchaseProductView {
     return parseInt(parent.querySelector('.product-purchase-price').dataset.productPrice);
   }
 
-  changeProductQuantity(parent, quantity) {
+  changeProductQuantityByParent(parent, quantity) {
     const quantityTd = parent.querySelector('.product-purchase-quantity');
     quantityTd.textContent = quantity;
     quantityTd.dataset.productQuantity = quantity;
@@ -117,8 +119,13 @@ export class PurchaseProductView {
 
   /* 상품 수량 변경 */
   changeProductQuantity(name, quantity) {
+    console.log(name + ", " + quantity)
     const row = this.productTable.querySelector(`td[data-product-name="${name}"]`).closest('tr');
     row.querySelector('.product-purchase-quantity').textContent = quantity;
+
+    if(quantity > 0) {
+      row.querySelector('.purchase-button').disabled = false;
+    }
   }
 
   /* 상품 가격, 수량 변경 */
@@ -126,6 +133,10 @@ export class PurchaseProductView {
     const row = this.productTable.querySelector(`td[data-product-name="${name}"]`).closest('tr');;
     row.querySelector('.product-purchase-price').textContent = price;
     row.querySelector('.product-purchase-quantity').textContent = quantity;
+
+    if(quantity > 0) {
+      row.querySelector('.purchase-button').disabled = false;
+    }
   }
 
   /* 잔돈 반환 출력 */
