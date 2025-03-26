@@ -65,8 +65,7 @@ export class ManageProductView {
         const productQuantity = row.querySelector('.product-manage-quantity');
         productQuantity.replaceChildren(document.createTextNode(quantity));
       }
-});
-
+    });
   }
 
   clearInput() {

@@ -106,6 +106,18 @@ export class PurchaseProductView {
     quantityTd.dataset.productQuantity = quantity;
   }
 
+  /* 수량 0이면 disabled */
+  initButton() {
+    const products = document.querySelectorAll('.product-purchase-item');
+    products.forEach(row => {
+      const productQuantity = row.querySelector('.product-purchase-quantity').textContent.trim();
+      if (parseInt(productQuantity) === 0) {
+        const purchaseButton = row.querySelector('.purchase-button');
+        purchaseButton.disabled = true;
+      }
+    });
+  }
+
   /* 잔돈 반환 출력 */
   updateCoinQuantity(coinMap) {
     for (const [coin, element] of this.coinQuantities) {

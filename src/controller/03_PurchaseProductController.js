@@ -14,6 +14,7 @@ export class PurchaseProductController {
   init() {
     this.chargeModel.loadUserMoneyFromLS();
     this.purchaseProductView.updateAmount(this.chargeModel.getUserMoney());
+    this.purchaseProductView.initButton();
   }
 
   bindEvents() {
