@@ -26,6 +26,7 @@ export class ManageProductController {
   handleProductAddButton(event) {
     event.preventDefault();
     const { name, price, quantity } = this.manageProductView.getProductData();
+    name = name.trim();
 
     // 가격 확인
     if (!isValidPrice(price)) {

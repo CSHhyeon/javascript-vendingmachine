@@ -33,18 +33,19 @@ export class ManageProductView {
     return newTr;
   }
 
-  createTableData(data, className) {
+  createTableData(data, className, dataSetName) {
     const newTd = document.createElement("td");
     newTd.className = className;
     newTd.textContent = data;
+    newTd.setAttribute(dataSetName, data);
     return newTd;
   }
 
   addNewProduct(product) {
     const newTr = this.createTableRow();
-    const name = this.createTableData(product.name, "product-manage-name");
-    const price = this.createTableData(product.price, "product-manage-price");
-    const quantity = this.createTableData(product.quantity, "product-manage-quantity");
+    const name = this.createTableData(product.name, "product-manage-name", "data-manage-name");
+    const price = this.createTableData(product.price, "product-manage-price", "data-manage-price");
+    const quantity = this.createTableData(product.quantity, "product-manage-quantity", "data-manage-quantity");
     
     newTr.appendChild(name);
     newTr.appendChild(price);
@@ -55,31 +56,15 @@ export class ManageProductView {
 
   /* 상품 수량 변경 */
   changeProductQuantity(name, quantity) {
-    const products = document.querySelectorAll('.product-manage-item');
-
-    products.forEach(row => {
-      const productName = row.querySelector('.product-manage-name');
-      if (productName.textContent.trim() === name) {
-        const productQuantity = row.querySelector('.product-manage-quantity');
-        productQuantity.replaceChildren(document.createTextNode(quantity));
-      }
-    });
+    const row = this.productTable.querySelector(`td[data-manage-name="${name}"]`).closest('tr');
+    row.querySelector('.product-manage-quantity').textContent = quantity;
   }
 
   /* 상품 가격, 수량 변경 */
   changeProductInfo(name, price, quantity) {
-    const products = document.querySelectorAll('.product-manage-item');
-
-    products.forEach(row => {
-      const productName = row.querySelector('.product-manage-name');
-      if (productName.textContent.trim() === name) {
-        const productQuantity = row.querySelector('.product-manage-quantity');
-        productQuantity.replaceChildren(document.createTextNode(quantity));
-
-        const productPrice = row.querySelector('.product-manage-price');
-        productPrice.replaceChildren(document.createTextNode(price));
-      }
-    });
+    const row = this.productTable.querySelector(`td[data-manage-name="${name}"]`).closest('tr');
+    row.querySelector('.product-manage-price').textContent = price;
+    row.querySelector('.product-manage-quantity').textContent = quantity;
   }
 
   clearInput() {
