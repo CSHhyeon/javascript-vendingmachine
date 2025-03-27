@@ -11,19 +11,21 @@ export class PurchaseProductController {
     this.bindEvents();
   }
 
+  // 새로고침 시 localStorage 정보 가지고 와서 html 렌더링
   init() {
     this.chargeModel.loadUserMoneyFromLS();
     this.purchaseProductView.updateAmount(this.chargeModel.getUserMoney());
     this.purchaseProductView.initButton();
   }
 
+  // '투입하기', '구매하기', '반환하기' 버튼 바인딩
   bindEvents() {
     this.purchaseProductView.bindChargeButton(this.handleChargeButton.bind(this));
     this.purchaseProductView.bindCoinReturnButton(this.handleCoinReturnButton.bind(this));
     this.purchaseProductView.bindProductTable(this.handleProductTable.bind(this));
   }
 
-  // 투입하기 버튼 클릭 핸들러
+  // '투입하기' 버튼 클릭 핸들러
   handleChargeButton(event) {
     event.preventDefault();
     const chargeMoney = Number(this.purchaseProductView.getChargeInput());
@@ -35,7 +37,7 @@ export class PurchaseProductController {
     this.purchaseProductView.updateAmount(this.chargeModel.addUserMoney(chargeMoney));
   }
 
-  // 상품 구매하기 버튼 클릭 핸들러
+  // '구매하기' 버튼 클릭 핸들러
   handleProductTable(event) {
     event.preventDefault();
 
@@ -66,7 +68,7 @@ export class PurchaseProductController {
     this.purchaseProductView.updateAmount(userMoney);
   }
 
-  // 반환하기 버튼 클릭 핸들러
+  // '반환하기' 버튼 클릭 핸들러
   handleCoinReturnButton(event) {
     event.preventDefault();
     const userMoney = this.chargeModel.getUserMoney();

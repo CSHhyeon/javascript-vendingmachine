@@ -97,7 +97,6 @@ export class ProductModel {
 
   // 이름, 가격 모두 같은지 확인 (모두 같으면 true 반환)
   isDuplicatedProduct(name, price) {
-    const product = this.productMap.get(name);
-    return this.productMap.has(name) && product.price === price;
+    return this.productMap.has(name) && this.productMap.get(name).price === price;
   }
 }
