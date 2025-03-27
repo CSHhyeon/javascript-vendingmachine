@@ -5,6 +5,7 @@ import { ProductModel } from './model/Product.js';
 import { Charge } from './model/Charge.js';
 
 // view
+import { TemplateView } from './view/templateView.js';
 import { ManageProductView } from './view/01_ManageProductView.js';
 import { ChangeChargeView } from './view/02_ChangeChargeView.js';
 import { PurchaseProductView } from './view/03_PurchaseProductView.js';
@@ -14,21 +15,24 @@ import { ManageProductController } from './controller/01_ManageProuductControlle
 import { ChangeChargeController } from './controller/02_ChangeChargeController.js';
 import { PurchaseProductController } from './controller/03_PurchaseProductController.js';
 
-// 탭 변경용
-new changeTab();
+// UI 초기화
+new TemplateView();
 
-const product = new ProductModel();
-const charge = new Charge();
+document.addEventListener('templateLoaded', () => {
+  // 탭 변경용
+  new changeTab();
 
-const manageProductView = new ManageProductView();
-const changeChargeView = new ChangeChargeView();
-const purchaseProductView = new PurchaseProductView();
+  // model
+  const product = new ProductModel();
+  const charge = new Charge();
 
-// 상품 관리
-new ManageProductController(product, manageProductView, purchaseProductView);
+  // view
+  const manageProductView = new ManageProductView();
+  const changeChargeView = new ChangeChargeView();
+  const purchaseProductView = new PurchaseProductView();
 
-// 잔돈 충전
-new ChangeChargeController(charge, changeChargeView);
-
-// 상품 구매
-new PurchaseProductController(charge, product, manageProductView, changeChargeView, purchaseProductView);
+  // controller
+  new ManageProductController(product, manageProductView, purchaseProductView); // 상품 관리
+  new ChangeChargeController(charge, changeChargeView); // 잔돈 충전
+  new PurchaseProductController(charge, product, manageProductView, changeChargeView, purchaseProductView); // 상품 구매
+});
