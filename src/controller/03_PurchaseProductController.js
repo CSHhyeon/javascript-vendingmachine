@@ -58,8 +58,8 @@ export class PurchaseProductController {
     const productQuantity = this.productModel.sellProduct(productName);
     if (productQuantity === 0) currentRow.querySelector('.purchase-button').disabled = true;
   
-    this.purchaseProductView.changeProductQuantityByParent(currentRow, productQuantity);
-    this.manageProductView.changeProductQuantity(productName, productQuantity);
+    this.purchaseProductView.changeProductQuantity(currentRow, productQuantity);
+    this.manageProductView.updateProductInfo(productName, { quantity: productQuantity });
   
     // 투입한 금액 수정
     const userMoney = this.chargeModel.useUserMoney(productPrice);
@@ -80,7 +80,7 @@ export class PurchaseProductController {
       calcMoney = userMoney;
       this.chargeModel.setMachineMoney(machineMoney - userMoney);
     }
-    
+
     this.chargeModel.setUserMoney(0);
     this.returnCoin(calcMoney);
   }

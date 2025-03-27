@@ -47,16 +47,16 @@ export class ManageProductController {
   // 수량 증가
   addQuantity(name, quantity) {
     const changedQuantity = this.productModel.addQuantity(name, quantity);
-    this.manageProductView.changeProductQuantity(name, changedQuantity);
-    this.purchaseProductView.changeProductQuantity(name, changedQuantity);
+    this.manageProductView.updateProductInfo(name, { quantity: changedQuantity });
+    this.purchaseProductView.updateProductInfo(name, { quantity: changedQuantity });
     this.manageProductView.clearInput();
   }
 
   // 기존 제품 정보 수정
   changePrice(name, price, quantity) {
     const changedQuantity = this.productModel.changeInfo(name, price, quantity);
-    this.manageProductView.changeProductInfo(name, price, changedQuantity);
-    this.purchaseProductView.changeProductInfo(name, price, changedQuantity);
+    this.manageProductView.updateProductInfo(name, { price: price, quantity: changedQuantity });
+    this.purchaseProductView.updateProductInfo(name, { price: price, quantity: changedQuantity });
     this.manageProductView.clearInput();
   }
 

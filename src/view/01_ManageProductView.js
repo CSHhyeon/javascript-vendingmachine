@@ -14,7 +14,7 @@ export class ManageProductView {
   /* 입력값 반환 */
   getProductData() {
     return {
-      name: this.productNameInput.value,
+      name: this.productNameInput.value.trim(),
       price: Number(this.productPriceInput.value),
       quantity: Number(this.productQuantityInput.value)
     }
@@ -54,17 +54,11 @@ export class ManageProductView {
     this.productTable.appendChild(newTr);
   }
 
-  /* 상품 수량 변경 */
-  changeProductQuantity(name, quantity) {
-    const row = this.productTable.querySelector(`td[data-manage-name="${name}"]`).closest('tr');
-    row.querySelector('.product-manage-quantity').textContent = quantity;
-  }
-
-  /* 상품 가격, 수량 변경 */
-  changeProductInfo(name, price, quantity) {
-    const row = this.productTable.querySelector(`td[data-manage-name="${name}"]`).closest('tr');
-    row.querySelector('.product-manage-price').textContent = price;
-    row.querySelector('.product-manage-quantity').textContent = quantity;
+  /* 상품 정보 변경 */
+  updateProductInfo(name, { price, quantity }) {
+    const row = this.productTable.querySelector(`td[data-manage-name="${name}"]`).closest("tr");
+    if (price !== undefined) row.querySelector(".product-manage-price").textContent = price;
+    if (quantity !== undefined) row.querySelector(".product-manage-quantity").textContent = quantity;
   }
 
   clearInput() {

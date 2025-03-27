@@ -99,7 +99,7 @@ export class PurchaseProductView {
     return parseInt(parent.querySelector('.product-purchase-price').dataset.productPrice);
   }
 
-  changeProductQuantityByParent(parent, quantity) {
+  changeProductQuantity(parent, quantity) {
     const quantityTd = parent.querySelector('.product-purchase-quantity');
     quantityTd.textContent = quantity;
     quantityTd.dataset.productQuantity = quantity;
@@ -117,21 +117,11 @@ export class PurchaseProductView {
     });
   }
 
-  /* 상품 수량 변경 */
-  changeProductQuantity(name, quantity) {
-    const row = this.productTable.querySelector(`td[data-product-name="${name}"]`).closest('tr');
-    row.querySelector('.product-purchase-quantity').textContent = quantity;
-
-    if(quantity > 0) {
-      row.querySelector('.purchase-button').disabled = false;
-    }
-  }
-
-  /* 상품 가격, 수량 변경 */
-  changeProductInfo(name, price, quantity) {
-    const row = this.productTable.querySelector(`td[data-product-name="${name}"]`).closest('tr');;
-    row.querySelector('.product-purchase-price').textContent = price;
-    row.querySelector('.product-purchase-quantity').textContent = quantity;
+  /* 상품 정보 변경 */
+  updateProductInfo(name, { price, quantity }) {
+    const row = this.productTable.querySelector(`td[data-product-name="${name}"]`).closest("tr");
+    if (price !== undefined) row.querySelector(".product-purchase-price").textContent = price;
+    if (quantity !== undefined) row.querySelector(".product-purchase-quantity").textContent = quantity;
 
     if(quantity > 0) {
       row.querySelector('.purchase-button').disabled = false;
