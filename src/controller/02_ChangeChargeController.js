@@ -25,13 +25,13 @@ export class ChangeChargeController {
     const chargeMoney = Number(this.changeChargeView.getChargeInput());
 
     // 금액 검토
-    if (!isValidPrice(chargeMoney)) {
-      alert("100원 이상의 10으로 떨어지는 정수를 입력하세요.");
-      return;
-    }
+    if (!isValidPrice(chargeMoney)) return alert("100원 이상의 10으로 떨어지는 정수를 입력하세요.");
 
+    this.addMachineMoney(chargeMoney);
     this.changeChargeView.clearInput();
+  }
 
+  addMachineMoney(chargeMoney) {
     // 보유 금액 적용
     const machineMoney = this.chargeModel.addMachineMoney(chargeMoney);
     this.changeChargeView.updateAmount(machineMoney);

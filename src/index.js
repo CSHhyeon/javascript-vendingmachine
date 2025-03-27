@@ -5,7 +5,7 @@ import { ProductModel } from './model/Product.js';
 import { Charge } from './model/Charge.js';
 
 // view
-import { TemplateView } from './view/templateView.js';
+import { TemplateView } from './view/00_templateView.js';
 import { ManageProductView } from './view/01_ManageProductView.js';
 import { ChangeChargeView } from './view/02_ChangeChargeView.js';
 import { PurchaseProductView } from './view/03_PurchaseProductView.js';

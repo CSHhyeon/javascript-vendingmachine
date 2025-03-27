@@ -3,18 +3,15 @@ export class changeTab {
     this.nav = document.querySelector('#tab-button-nav');
     this.sections = document.querySelectorAll('section[id^="tab-section"]');
 
-    this.init();
+    this.nav.addEventListener("click", this.handleTabClick.bind(this));
   }
 
-  init() {
-    this.nav.addEventListener('click',(e) => {
-      if (!e.target.dataset.tabSection) return;
+  handleTabClick(event) {
+    const targetId = event.target.dataset.tabSection;
+    if (!targetId) return;
 
-      const targetId = e.target.dataset.tabSection;
-
-      this.sections.forEach((section) => {
-        section.id === targetId ? section.removeAttribute('hidden') : section.setAttribute('hidden', true);
-      });
-    })
+    this.sections.forEach((section) =>
+      section.id === targetId ? section.removeAttribute("hidden") : section.setAttribute("hidden", true)
+    );
   }
 }

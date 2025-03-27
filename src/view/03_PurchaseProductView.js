@@ -119,7 +119,6 @@ export class PurchaseProductView {
 
   /* 상품 수량 변경 */
   changeProductQuantity(name, quantity) {
-    console.log(name + ", " + quantity)
     const row = this.productTable.querySelector(`td[data-product-name="${name}"]`).closest('tr');
     row.querySelector('.product-purchase-quantity').textContent = quantity;
 

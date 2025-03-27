@@ -29,14 +29,9 @@ export class PurchaseProductController {
     const chargeMoney = Number(this.purchaseProductView.getChargeInput());
 
     // 투입 금액 확인
-    if (!isValidPrice(chargeMoney)) {
-      alert("100원 이상의 10으로 떨어지는 정수를 입력하세요.");
-      return;
-    }
+    if (!isValidPrice(chargeMoney)) return alert("100원 이상의 10으로 떨어지는 정수를 입력하세요.");
 
     this.purchaseProductView.clearInput();
-
-    // html 적용
     this.purchaseProductView.updateAmount(this.chargeModel.addUserMoney(chargeMoney));
   }
 
@@ -49,21 +44,23 @@ export class PurchaseProductController {
 
     // target: 이벤트가 발생한 객체, closest(): 현재 element에서 가장 가까운 조상 반환
     const currentRow = event.target.closest('tr');
-    const productPrice  = this.purchaseProductView.getProductPrice(currentRow);
-    if ( productPrice > this.chargeModel.getUserMoney()) {
-      alert("금액이 모자랍니다.");
-      return;
-    }
-
     const productName = this.purchaseProductView.getProductName(currentRow);
+    const productPrice  = this.purchaseProductView.getProductPrice(currentRow);
 
+    if ( productPrice > this.chargeModel.getUserMoney()) return alert("금액이 모자랍니다.");
+
+    this.purchaseProduct(productName, currentRow, productPrice);
+  }
+
+  // 상품 구매
+  purchaseProduct(productName, currentRow, productPrice) {
     // 수량 수정
     const productQuantity = this.productModel.sellProduct(productName);
-    if (productQuantity === 0) event.target.disabled = true;
-
+    if (productQuantity === 0) currentRow.querySelector('.purchase-button').disabled = true;
+  
     this.purchaseProductView.changeProductQuantityByParent(currentRow, productQuantity);
     this.manageProductView.changeProductQuantity(productName, productQuantity);
-
+  
     // 투입한 금액 수정
     const userMoney = this.chargeModel.useUserMoney(productPrice);
     this.purchaseProductView.updateAmount(userMoney);
@@ -83,8 +80,12 @@ export class PurchaseProductController {
       calcMoney = userMoney;
       this.chargeModel.setMachineMoney(machineMoney - userMoney);
     }
+    
     this.chargeModel.setUserMoney(0);
+    this.returnCoin(calcMoney);
+  }
 
+  returnCoin(calcMoney) {
     // 상품 구매 페이지
     const returnCoinMap = this.chargeModel.minimumCoin(calcMoney);
     this.purchaseProductView.updateCoinQuantity(returnCoinMap);
